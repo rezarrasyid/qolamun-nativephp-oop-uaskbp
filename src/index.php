@@ -21,8 +21,8 @@ $totalPenulis = $rPenulis ? (int)mysqli_fetch_assoc($rPenulis)['t'] : 0;
 $rKat = mysqli_query($koneksi, "SELECT COUNT(*) AS t FROM categories");
 $totalKat = $rKat ? (int)mysqli_fetch_assoc($rKat)['t'] : 0;
 
-// Ambil karya terbaru (untuk Featured / spotlight)
-$rFeatured = mysqli_query($koneksi, 
+// Ambil karya terbaru (untuk Unggulan)
+$rUnggulan = mysqli_query($koneksi, 
     "SELECT p.*, c.nama_kategori, u.nama AS nama_penulis
      FROM posts p
      LEFT JOIN categories c ON c.id = p.category_id
@@ -30,7 +30,7 @@ $rFeatured = mysqli_query($koneksi,
      ORDER BY p.created_at DESC, p.id DESC
      LIMIT 1"
 );
-$featured = $rFeatured ? mysqli_fetch_assoc($rFeatured) : null;
+$unggulan = $rUnggulan ? mysqli_fetch_assoc($rUnggulan) : null;
 
 // Kumpulkan semua karya ke array (untuk filter JS client-side)
 $semuaKarya = [];
@@ -253,9 +253,9 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ===================== FEATURED / SPOTLIGHT ===================== -->
-<?php if ($featured):
-    $fThumb = !empty($featured['thumbnail']) && file_exists(__DIR__ . '/uploads/' . $featured['thumbnail'])
-        ? 'uploads/' . $featured['thumbnail']
+<?php if ($unggulan):
+    $fThumb = !empty($unggulan['thumbnail']) && file_exists(__DIR__ . '/uploads/' . $unggulan['thumbnail'])
+        ? 'uploads/' . $unggulan['thumbnail']
         : 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=1200&q=80';
 ?>
 <section class="max-w-6xl mx-auto px-4 pt-12 pb-4 animate-fadeup delay-300">
@@ -264,14 +264,14 @@ include __DIR__ . '/includes/header.php';
         <h2 class="text-lg font-extrabold text-emerald-800 uppercase tracking-wider">Karya Unggulan</h2>
     </div>
 
-    <a href="detail.php?id=<?= $featured['id'] ?>"
+    <a href="detail.php?id=<?= $unggulan['id'] ?>"
        class="featured-card group relative flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300"
        data-testid="featured-card">
         
         <!-- Thumbnail -->
         <div class="md:w-1/2 aspect-[16/9] md:aspect-auto overflow-hidden flex-shrink-0">
             <img src="<?= htmlspecialchars($fThumb) ?>"
-                 alt="<?= htmlspecialchars($featured['judul']) ?>"
+                 alt="<?= htmlspecialchars($unggulan['judul']) ?>"
                  class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
         </div>
 
@@ -281,24 +281,24 @@ include __DIR__ . '/includes/header.php';
             <div class="absolute top-4 right-4 text-white/10 text-7xl font-serif select-none">✦</div>
 
             <span class="inline-block self-start px-3 py-1 rounded-full bg-white/15 border border-white/20 text-emerald-200 text-[10px] uppercase tracking-widest font-bold mb-4">
-                <?= htmlspecialchars($featured['nama_kategori'] ?? 'Umum') ?>
+                <?= htmlspecialchars($unggulan['nama_kategori'] ?? 'Umum') ?>
             </span>
 
             <h3 class="font-serif-art text-2xl md:text-3xl font-bold leading-snug mb-4 group-hover:text-emerald-200 transition">
-                <?= htmlspecialchars($featured['judul']) ?>
+                <?= htmlspecialchars($unggulan['judul']) ?>
             </h3>
 
             <p class="text-white/70 text-sm leading-relaxed mb-6 line-clamp-3">
-                <?= htmlspecialchars(mb_substr(strip_tags($featured['konten']), 0, 200)) ?>…
+                <?= htmlspecialchars(mb_substr(strip_tags($unggulan['konten']), 0, 200)) ?>…
             </p>
 
             <div class="flex items-center gap-3 text-sm text-white/60">
                 <div class="w-7 h-7 rounded-full bg-white/20 grid place-items-center font-bold text-xs text-white">
-                    <?= strtoupper(substr($featured['nama_penulis'] ?? 'S', 0, 1)) ?>
+                    <?= strtoupper(substr($unggulan['nama_penulis'] ?? 'S', 0, 1)) ?>
                 </div>
-                <span><?= htmlspecialchars($featured['nama_penulis'] ?? 'Santri') ?></span>
+                <span><?= htmlspecialchars($unggulan['nama_penulis'] ?? 'Santri') ?></span>
                 <span class="text-white/30">•</span>
-                <span><?= date('d M Y', strtotime($featured['created_at'])) ?></span>
+                <span><?= date('d M Y', strtotime($unggulan['created_at'])) ?></span>
             </div>
 
             <div class="mt-6 self-start inline-flex items-center gap-2 text-emerald-300 font-semibold text-sm group-hover:gap-3 transition-all">
