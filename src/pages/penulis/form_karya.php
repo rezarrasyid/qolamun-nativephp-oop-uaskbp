@@ -1,6 +1,12 @@
 <?php
 session_start();
-if (($_SESSION['role'] ?? null) !== 'penulis') { header('Location: ../../auth/login.php'); exit; }
+
+// Validasi akses Penulis
+if (($_SESSION['role'] ?? null) !== 'penulis') { 
+    header('Location: ../../auth/login.php'); 
+    exit; 
+}
+
 require_once __DIR__ . '/../../koneksi.php';
 require_once __DIR__ . '/../../classes/Penulis.php';
 
@@ -9,13 +15,20 @@ $user_id = (int)$_SESSION['user_id'];
 
 $id = (int)($_GET['id'] ?? 0);
 $editData = null;
+
 if ($id > 0) {
     $r = mysqli_query($koneksi, "SELECT * FROM posts WHERE id=$id AND user_id=$user_id LIMIT 1");
     $editData = $r ? mysqli_fetch_assoc($r) : null;
-    if (!$editData) { header('Location: karya.php'); exit; }
+    
+    if (!$editData) { 
+        header('Location: karya.php'); 
+        exit; 
+    }
 }
 
 $err = null;
+
+// Proses Form Submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $judul       = trim($_POST['judul']);
     $konten      = $_POST['konten'] ?? '';
@@ -26,19 +39,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($_FILES['thumbnail']['name'])) {
         $allowed = ['jpg','jpeg','png','gif','webp'];
         $ext = strtolower(pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION));
+        
         if (!in_array($ext, $allowed)) {
-            $err = 'Format thumbnail harus jpg/png/gif/webp.';
+            $err = 'Format thumbnail harus jpg, jpeg, png, gif, atau webp.';
         } else {
             $newName = 'thumb_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
             $target  = __DIR__ . '/../../uploads/' . $newName;
+            
             if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $target)) {
-                // Hapus thumbnail lama jika edit
                 if ($editData && !empty($editData['thumbnail']) && file_exists(__DIR__.'/../../uploads/'.$editData['thumbnail'])) {
                     @unlink(__DIR__.'/../../uploads/'.$editData['thumbnail']);
                 }
                 $thumbnailNama = $newName;
             } else {
-                $err = 'Gagal mengupload thumbnail.';
+                $err = 'Gagal mengunggah thumbnail. Pastikan folder uploads memiliki izin tulis (write permissions).';
             }
         }
     }
@@ -46,68 +60,116 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$err) {
         if ($editData) {
             $penulis->editKarya($editData['id'], $judul, $konten, $category_id, $thumbnailNama, $user_id);
-            header('Location: karya.php?msg=' . urlencode('Karya berhasil diperbarui.')); exit;
+            header('Location: karya.php?msg=' . urlencode('Karya berhasil diperbarui.')); 
+            exit;
         } else {
             $penulis->tambahKarya($judul, $konten, $category_id, $thumbnailNama, $user_id);
-            header('Location: karya.php?msg=' . urlencode('Karya baru berhasil dipublikasikan.')); exit;
+            header('Location: karya.php?msg=' . urlencode('Karya baru berhasil dipublikasikan.')); 
+            exit;
         }
     }
 }
+
 $kat = mysqli_query($koneksi, "SELECT * FROM categories ORDER BY nama_kategori ASC");
 $pageTitle = $editData ? 'Edit Karya' : 'Tambah Karya';
+
 include __DIR__ . '/../../includes/header.php';
 ?>
+
 <div class="flex">
     <?php include __DIR__ . '/../../includes/sidebar_penulis.php'; ?>
-    <main class="flex-1 p-6 md:p-8">
-        <h1 class="text-2xl font-extrabold text-emerald-800 mb-4" data-testid="form-karya-title"><?= $editData ? 'Edit Karya' : 'Tulis Karya Baru' ?></h1>
-        <?php if ($err): ?><div class="mb-4 px-3 py-2 rounded-lg bg-red-50 text-red-700 text-sm" data-testid="form-error"><?= htmlspecialchars($err) ?></div><?php endif; ?>
-
-        <form method="POST" enctype="multipart/form-data" class="bg-white border border-green-100 rounded-2xl p-6 space-y-4" data-testid="karya-form">
-            <div>
-                <label class="text-sm font-medium">Judul</label>
-                <input name="judul" required value="<?= htmlspecialchars($editData['judul'] ?? '') ?>" class="w-full px-3 py-2 border rounded-lg" data-testid="karya-judul">
+    
+    <main class="flex-1 p-6 md:p-8 bg-slate-50 min-h-screen">
+        <h1 class="text-2xl font-extrabold text-emerald-800 mb-6" data-testid="form-karya-title">
+            <?= $editData ? 'Edit Karya' : 'Tulis Karya Baru' ?>
+        </h1>
+        
+        <?php if ($err): ?>
+            <div class="mb-6 px-4 py-3 rounded-xl bg-red-50 border border-red-100 text-red-700 text-sm flex items-center gap-2" data-testid="form-error">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                </svg>
+                <?= htmlspecialchars($err) ?>
             </div>
-            <div class="grid sm:grid-cols-2 gap-4">
+        <?php endif; ?>
+
+        <form method="POST" enctype="multipart/form-data" class="bg-white border border-green-100 rounded-2xl p-6 md:p-8 shadow-sm space-y-6" data-testid="karya-form">
+            
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-2">Judul Tulisan</label>
+                <input name="judul" required value="<?= htmlspecialchars($editData['judul'] ?? '') ?>" 
+                       class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition" 
+                       data-testid="karya-judul" placeholder="Masukkan judul yang menarik...">
+            </div>
+            
+            <div class="grid sm:grid-cols-2 gap-6">
                 <div>
-                    <label class="text-sm font-medium">Kategori</label>
-                    <select name="category_id" required class="w-full px-3 py-2 border rounded-lg" data-testid="karya-kategori">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Kategori</label>
+                    <select name="category_id" required 
+                            class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition bg-white" 
+                            data-testid="karya-kategori">
                         <option value="">-- Pilih Kategori --</option>
                         <?php while ($k = mysqli_fetch_assoc($kat)): ?>
-                            <option value="<?= $k['id'] ?>" <?= ($editData['category_id'] ?? null) == $k['id'] ? 'selected' : '' ?>><?= htmlspecialchars($k['nama_kategori']) ?></option>
+                            <option value="<?= $k['id'] ?>" <?= ($editData['category_id'] ?? null) == $k['id'] ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($k['nama_kategori']) ?>
+                            </option>
                         <?php endwhile; ?>
                     </select>
                 </div>
+                
                 <div>
-                    <label class="text-sm font-medium">Thumbnail <?= $editData ? '<span class="text-xs text-slate-400">(kosongkan jika tidak diubah)</span>' : '' ?></label>
-                    <input type="file" name="thumbnail" accept="image/*" class="w-full text-sm" data-testid="karya-thumbnail">
+                    <label class="block text-sm font-bold text-slate-700 mb-2">
+                        Gambar Thumbnail <?= $editData ? '<span class="text-xs text-slate-400 font-normal">(biarkan kosong jika tidak diubah)</span>' : '' ?>
+                    </label>
+                    <input type="file" name="thumbnail" accept="image/*" 
+                           class="w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 transition" 
+                           data-testid="karya-thumbnail">
+                    
                     <?php if (!empty($editData['thumbnail'])): ?>
-                        <img src="../../uploads/<?= htmlspecialchars($editData['thumbnail']) ?>" class="mt-2 w-32 rounded border">
+                        <div class="mt-3">
+                            <p class="text-xs text-slate-400 mb-1">Thumbnail saat ini:</p>
+                            <img src="../../uploads/<?= htmlspecialchars($editData['thumbnail']) ?>" class="h-20 object-cover rounded-lg border border-slate-200 shadow-sm">
+                        </div>
                     <?php endif; ?>
                 </div>
             </div>
+            
             <div>
-                <label class="text-sm font-medium">Konten</label>
-                <textarea name="konten" id="editorKonten" rows="14" class="w-full px-3 py-2 border rounded-lg" data-testid="karya-konten"><?= $editData['konten'] ?? '' ?></textarea>
+                <label class="block text-sm font-bold text-slate-700 mb-2">Isi Konten</label>
+                <textarea name="konten" id="editorKonten" rows="18" 
+                          class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition" 
+                          data-testid="karya-konten"><?= $editData['konten'] ?? '' ?></textarea>
             </div>
-            <div class="flex gap-2">
-                <button class="bg-emerald-600 text-white px-5 py-2 rounded-lg hover:bg-emerald-700" data-testid="karya-submit"><?= $editData ? 'Simpan Perubahan' : 'Publikasikan' ?></button>
-                <a href="karya.php" class="px-5 py-2 border rounded-lg hover:bg-slate-50" data-testid="karya-cancel">Batal</a>
+            
+            <div class="flex items-center gap-3 pt-4 border-t border-slate-50">
+                <button type="submit" class="bg-emerald-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-emerald-700 shadow-lg shadow-emerald-600/20 transition" data-testid="karya-submit">
+                    <?= $editData ? 'Simpan Perubahan' : 'Publikasikan Karya' ?>
+                </button>
+                <a href="karya.php" class="px-6 py-3 font-semibold text-slate-500 hover:bg-slate-100 rounded-xl transition" data-testid="karya-cancel">
+                    Batal
+                </a>
             </div>
         </form>
     </main>
 </div>
 
-<!-- TinyMCE via CDN -->
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
-tinymce.init({
-    selector: '#editorKonten',
-    height: 460,
-    menubar: false,
-    plugins: 'lists link image table code preview fullscreen',
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline forecolor backcolor | alignleft aligncenter alignright | bullist numlist | link image table | code preview fullscreen',
-    content_style: "body { font-family:'Plus Jakarta Sans', sans-serif; font-size:15px; line-height:1.7 }"
+document.addEventListener("DOMContentLoaded", function() {
+    tinymce.init({
+        selector: '#editorKonten',
+        height: 500,
+        menubar: false,
+        branding: false, /* Menghilangkan logo tiny di pojok bawah */
+        plugins: 'lists link image table code preview fullscreen',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table | preview fullscreen code',
+        content_style: "@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap'); body { font-family:'Plus Jakarta Sans', sans-serif; font-size:16px; line-height:1.8; color: #1e293b; }",
+        setup: function (editor) {
+            editor.on('change', function () {
+                editor.save(); // Memastikan data masuk ke textarea saat form disubmit
+            });
+        }
+    });
 });
 </script>
 
