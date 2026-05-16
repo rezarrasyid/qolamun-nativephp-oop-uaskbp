@@ -29,12 +29,6 @@ $current = basename($_SERVER['PHP_SELF']);
            Karya Saya
         </a>
         
-        <a href="form_karya.php" 
-           class="<?= $current === 'form_karya.php' ? 'bg-emerald-100 text-emerald-800' : 'text-slate-700 hover:bg-green-50' ?> block px-3 py-2 rounded-lg" 
-           data-testid="sidebar-tambah">
-           + Tambah Karya
-        </a>
-        
         <a href="../../index.php" 
            class="block px-3 py-2 rounded-lg text-slate-700 hover:bg-green-50" 
            data-testid="sidebar-public">

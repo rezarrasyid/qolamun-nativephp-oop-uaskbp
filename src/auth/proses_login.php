@@ -31,9 +31,9 @@ if ($data) {
 
     // Redirection berdasarkan Role
     if ($data['role'] === 'admin') {
-        header('Location: ../page/admin/dashboard.php');
+        header('Location: ../pages/admin/dashboard.php');
     } else {
-        header('Location: ../page/penulis/dashboard.php');
+        header('Location: ../pages/penulis/dashboard.php');
     }
     exit;
 }

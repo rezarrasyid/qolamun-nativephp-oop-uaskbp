@@ -40,7 +40,7 @@ $nama = $_SESSION['nama'] ?? null;
         <!-- Navigation Actions -->
         <div class="flex items-center gap-2">
             <?php if ($role === 'admin'): ?>
-                <a href="../../page/admin/dashboard.php" 
+                <a href="../../pages/admin/dashboard.php" 
                    class="text-sm px-3 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700" 
                    data-testid="nav-admin-dashboard">
                    Dashboard Admin
@@ -51,7 +51,7 @@ $nama = $_SESSION['nama'] ?? null;
                    Logout
                 </a>
             <?php elseif ($role === 'penulis'): ?>
-                <a href="../../page/penulis/dashboard.php" 
+                <a href="../../pages/penulis/dashboard.php" 
                    class="text-sm px-3 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700" 
                    data-testid="nav-penulis-dashboard">
                    Dashboard Penulis
