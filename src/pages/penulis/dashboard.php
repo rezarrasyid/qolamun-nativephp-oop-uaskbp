@@ -14,7 +14,6 @@ $pageTitle = 'Dashboard Penulis';
 include __DIR__ . '/../../includes/header.php';
 ?>
 <div class="flex">
-    <?php include __DIR__ . '/../../includes/sidebar_penulis.php'; ?>
     <main class="flex-1 p-6 md:p-8">
         <h1 class="text-2xl font-extrabold text-emerald-800 mb-1" data-testid="penulis-dashboard-title">Selamat Datang, <?= htmlspecialchars($penulis->getNama()) ?></h1>
         <p class="text-sm text-slate-500 mb-6"><?= htmlspecialchars($penulis->tampilkanInfo()) ?></p>

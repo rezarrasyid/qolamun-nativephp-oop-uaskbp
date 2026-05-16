@@ -19,7 +19,6 @@ $pageTitle = 'Karya Saya';
 include __DIR__ . '/../../includes/header.php';
 ?>
 <div class="flex">
-    <?php include __DIR__ . '/../../includes/sidebar_penulis.php'; ?>
     <main class="flex-1 p-6 md:p-8">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl font-extrabold text-emerald-800" data-testid="penulis-karya-title">Karya Saya</h1>

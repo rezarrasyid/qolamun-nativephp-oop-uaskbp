@@ -3,7 +3,7 @@ session_start();
 // Jika sudah login, langsung ke dashboard sesuai role
 if (isset($_SESSION['user_id'])) {
     $r = $_SESSION['role'];
-    header('Location: ' . ($r === 'admin' ? '../page/admin/dashboard.php' : '../page/penulis/dashboard.php'));
+    header('Location: ' . ($r === 'admin' ? '../pages/admin/dashboard.php' : '../pages/penulis/dashboard.php'));
     exit;
 }
 $err = $_GET['err'] ?? null;

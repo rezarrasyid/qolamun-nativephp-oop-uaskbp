@@ -50,7 +50,6 @@ include __DIR__ . '/../../includes/header.php';
 ?>
 
 <div class="flex">
-    <?php include __DIR__ . '/../../includes/sidebar_admin.php'; ?>
     
     <main class="flex-1 p-6 md:p-8 bg-slate-50 min-h-screen">
         <h1 class="text-2xl font-extrabold text-emerald-800 mb-1" data-testid="admin-users-title">Kelola User</h1>
