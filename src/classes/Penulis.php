@@ -97,7 +97,7 @@ class Penulis extends User
     private function buatSlug($text)
     {
         $text = strtolower(trim($text));
-        $text = preg_replace('[^a-z0-9]', '-', $text);
+        $text = preg_replace('/[^a-z0-9]+/', '-', $text);
         $text = trim($text, '-');
         return $text . '-' . time();
     }

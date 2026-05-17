@@ -264,7 +264,7 @@ include __DIR__ . '/includes/header.php';
         <h2 class="text-lg font-extrabold text-emerald-800 uppercase tracking-wider">Karya Unggulan</h2>
     </div>
 
-    <a href="detail.php?id=<?= $unggulan['id'] ?>"
+    <a href="detail.php?slug=<?= $unggulan['slug'] ?>"
        class="featured-card group relative flex flex-col md:flex-row rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition duration-300"
        data-testid="featured-card">
         
@@ -373,7 +373,7 @@ include __DIR__ . '/includes/header.php';
                 $cuplikan = mb_substr(strip_tags($row['konten']), 0, 115) . '…';
                 $tanggal  = date('d M Y', strtotime($row['created_at']));
             ?>
-                <a href="detail.php?id=<?= $row['id'] ?>"
+                <a href="detail.php?slug=<?= $row['slug'] ?>"
                    class="karya-item karya-card group bg-white border border-green-100 rounded-2xl overflow-hidden shadow-sm"
                    data-kat="<?= htmlspecialchars($row['category_id'] ?? '') ?>"
                    data-judul="<?= strtolower(htmlspecialchars($row['judul'])) ?>"

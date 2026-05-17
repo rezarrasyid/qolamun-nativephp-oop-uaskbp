@@ -30,6 +30,20 @@ class Karya
         return $r ? mysqli_fetch_assoc($r) : null;
     }
 
+    public function ambilKaryaBySlug($slug)
+    {
+    $slug = mysqli_real_escape_string($this->koneksi, $slug);
+    
+    $sql = "SELECT p.*, c.nama_kategori, u.nama AS nama_penulis
+            FROM posts p
+            LEFT JOIN categories c ON c.id = p.category_id
+            LEFT JOIN users u ON u.id = p.user_id
+            WHERE p.slug = '$slug' LIMIT 1";
+            
+    $r = mysqli_query($this->koneksi, $sql);
+    return $r ? mysqli_fetch_assoc($r) : null;
+    }
+
     public function ambilSemuaKategori()
     {
         return mysqli_query($this->koneksi, "SELECT * FROM categories ORDER BY nama_kategori ASC");

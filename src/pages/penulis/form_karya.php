@@ -136,7 +136,8 @@ include __DIR__ . '/../../includes/header.php';
                 <label class="block text-sm font-bold text-slate-700 mb-2">Isi Konten</label>
                 <textarea name="konten" id="editorKonten" rows="18" 
                           class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none transition" 
-                          data-testid="karya-konten"><?= $editData['konten'] ?? '' ?></textarea>
+                          data-testid="karya-konten"><?= $editData['konten'] ?? '' ?>
+                </textarea>
             </div>
             
             <div class="flex items-center gap-3 pt-4 border-t border-slate-50">
