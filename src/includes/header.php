@@ -37,8 +37,7 @@ if ($isPenulisPanel && $role !== 'penulis') { header('Location: ../../auth/login
         .scrollbar-none::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="bg-green-50 text-slate-800 min-h-screen">
-
+<body class="bg-green-50 text-slate-800 min-h-screen flex flex-col">
 <?php if ($isAdminPanel): ?>
     <?php
     $adminLinks = [
@@ -125,4 +124,4 @@ if ($isPenulisPanel && $role !== 'penulis') { header('Location: ../../auth/login
     </nav>
 <?php endif; ?>
 
-<main>
+<main class="flex-grow">

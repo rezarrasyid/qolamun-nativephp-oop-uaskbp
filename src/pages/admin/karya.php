@@ -37,8 +37,7 @@ include __DIR__ . '/../../includes/header.php';
 <div class="flex">
     
     <main class="flex-1 max-w-7xl mx-auto w-full p-6 md:p-8">
-        <h1 class="text-2xl font-extrabold text-emerald-800 mb-1" data-testid="admin-karya-title">Kelola Karya</h1>
-        <p class="text-sm text-slate-500 mb-6">Admin memiliki akses penuh untuk meninjau dan menghapus karya milik siapapun.</p>
+        <h1 class="text-2xl font-extrabold text-emerald-800 mb-4" data-testid="admin-karya-title">Kelola Karya</h1>
         
         <!-- Pesan Notifikasi -->
         <?php if ($msg): ?>
@@ -51,13 +50,13 @@ include __DIR__ . '/../../includes/header.php';
         <div class="bg-white border border-green-100 rounded-2xl shadow-sm overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-sm text-left whitespace-nowrap" data-testid="karya-table">
-                    <thead class="bg-emerald-50 text-emerald-800 border-b border-green-100">
+                    <thead class="bg-slate-50 text-slate-600 border-b border-slate-200 text-xs uppercase tracking-wider">
                         <tr>
-                            <th class="px-5 py-3.5 font-semibold">Judul Karya</th>
-                            <th class="px-5 py-3.5 font-semibold">Kategori</th>
-                            <th class="px-5 py-3.5 font-semibold">Penulis</th>
-                            <th class="px-5 py-3.5 font-semibold">Tanggal Publish</th>
-                            <th class="px-5 py-3.5 font-semibold text-right">Aksi</th>
+                            <th class="px-5 py-3.5 font-bold">Judul Karya</th>
+                            <th class="px-5 py-3.5 font-bold">Kategori</th>
+                            <th class="px-5 py-3.5 font-bold">Penulis</th>
+                            <th class="px-5 py-3.5 font-bold">Tanggal Publish</th>
+                            <th class="px-5 py-3.5 font-bold text-right">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-100">

@@ -56,12 +56,11 @@ include __DIR__ . '/../../includes/header.php';
 <div class="flex">
     
     <main class="flex-1 max-w-7xl mx-auto w-full p-6 md:p-8">
-        <h1 class="text-2xl font-extrabold text-emerald-800 mb-1" data-testid="admin-kategori-title">Kelola Kategori</h1>
-        <p class="text-sm text-slate-500 mb-6">Tambah, edit, atau hapus kategori untuk mengelompokkan karya.</p>
+        <h1 class="text-2xl font-extrabold text-emerald-800 mb-4" data-testid="admin-kategori-title">Kelola Kategori</h1>
         
         <!-- Pesan Notifikasi -->
         <?php if ($msg): ?>
-            <div class="mb-6 px-4 py-3 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm" data-testid="flash-msg">
+            <div class="mb-4 px-4 py-3 rounded-xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-sm" data-testid="flash-msg">
                 <?= htmlspecialchars($msg) ?>
             </div>
         <?php endif; ?>
@@ -109,11 +108,11 @@ include __DIR__ . '/../../includes/header.php';
             <div class="lg:col-span-2 bg-white border border-green-100 rounded-2xl shadow-sm overflow-hidden h-fit">
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left whitespace-nowrap" data-testid="kategori-table">
-                        <thead class="bg-emerald-50 text-emerald-800 border-b border-green-100">
+                        <thead class="bg-slate-50 text-slate-600 border-b border-slate-200 text-xs uppercase tracking-wider">
                             <tr>
-                                <th class="px-5 py-3.5 font-semibold">Nama Kategori</th>
-                                <th class="px-5 py-3.5 font-semibold">Slug URL</th>
-                                <th class="px-5 py-3.5 font-semibold text-right">Aksi</th>
+                                <th class="px-5 py-3.5 font-bold">Nama Kategori</th>
+                                <th class="px-5 py-3.5 font-bold">Slug URL</th>
+                                <th class="px-5 py-3.5 font-bold text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">

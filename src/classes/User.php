@@ -116,6 +116,6 @@ class User
 
     public function tampilkanInfo()
     {
-        return "User: {$this->nama} (role: {$this->role})";
+        return "User: " . $this->nama . " (role: " . $this->role . ")";
     }
 }
