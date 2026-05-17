@@ -14,6 +14,9 @@ include __DIR__ . '/../includes/header.php';
     <div class="bg-white border border-green-100 rounded-2xl shadow-xl shadow-emerald-900/5 p-8">
         <!-- Header Login -->
         <div class="text-center mb-8">
+            <div class="w-14 h-14 rounded-2xl bg-emerald-600 text-white grid place-items-center mx-auto mb-4 shadow-lg shadow-emerald-600/30">
+                <span class="font-arabic text-3xl leading-none">ق</span>
+            </div>
             <h1 class="text-2xl font-extrabold text-emerald-800 mb-2">Masuk ke Qolamun</h1>
             <p class="text-sm text-slate-500">Gunakan akun Anda untuk mengelola karya.</p>
         </div>

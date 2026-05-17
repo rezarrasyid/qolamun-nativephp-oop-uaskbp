@@ -11,7 +11,7 @@ include __DIR__ . '/../includes/header.php';
 ?>
 
 <section class="max-w-md mx-auto px-4 py-12 md:py-20">
-    <div class="qcard p-8 shadow-xl" style="box-shadow:0 20px 60px -12px rgba(5,150,105,.15)">
+    <div class="bg-white border border-green-100 rounded-2xl shadow-xl shadow-emerald-900/5 p-8" style="box-shadow:0 20px 60px -12px rgba(5,150,105,.15)">
 
         <!-- Header -->
         <div class="text-center mb-8">
@@ -48,13 +48,13 @@ include __DIR__ . '/../includes/header.php';
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider mb-1.5 ml-1" style="color:var(--text-muted)">Nama Lengkap</label>
                 <input type="text" name="nama" required placeholder="Nama lengkapmu"
-                       class="qinput" data-testid="register-nama">
+                       class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition" data-testid="register-nama">
             </div>
 
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider mb-1.5 ml-1" style="color:var(--text-muted)">Username</label>
                 <input type="text" name="username" required placeholder="Pilih username unik"
-                       class="qinput" data-testid="register-username"
+                       class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition" data-testid="register-username"
                        pattern="[a-zA-Z0-9_]+" title="Hanya huruf, angka, dan underscore">
                 <p class="text-[10px] ml-1 mt-1" style="color:var(--text-muted)">Huruf, angka, dan underscore saja. Tidak bisa diubah.</p>
             </div>
@@ -63,7 +63,7 @@ include __DIR__ . '/../includes/header.php';
                 <label class="block text-xs font-bold uppercase tracking-wider mb-1.5 ml-1" style="color:var(--text-muted)">Password</label>
                 <div class="relative">
                     <input type="password" name="password" id="regPass" required placeholder="Minimal 6 karakter"
-                           class="qinput pr-10" minlength="6" data-testid="register-password">
+                           class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition pr-10" minlength="6" data-testid="register-password">
                     <button type="button" id="togglePass"
                             class="absolute right-3 top-1/2 -translate-y-1/2"
                             style="color:var(--text-muted)" aria-label="Tampilkan password">
@@ -75,7 +75,7 @@ include __DIR__ . '/../includes/header.php';
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider mb-1.5 ml-1" style="color:var(--text-muted)">Konfirmasi Password</label>
                 <input type="password" name="konfirmasi" id="regKonfirmasi" required placeholder="Ulangi password"
-                       class="qinput" data-testid="register-konfirmasi">
+                       class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition" data-testid="register-konfirmasi">
                 <p id="passMsg" class="text-[10px] ml-1 mt-1 hidden"></p>
             </div>
 

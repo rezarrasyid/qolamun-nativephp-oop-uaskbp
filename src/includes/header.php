@@ -53,7 +53,7 @@ if ($isPenulisPanel && $role !== 'penulis') { header('Location: ../../auth/login
             <div class="flex items-center gap-2 mr-6 flex-shrink-0">
                 <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white grid place-items-center font-bold font-arabic text-lg">ق</div>
                 <div class="flex items-baseline gap-1.5">
-                    <span class="font-arabic text-xl font-bold text-emerald-800">قَلَمُوْن</span>
+                    <span class="font-arabic text-xl font-bold text-emerald-800">قلمون</span>
                     <span class="text-[9px] font-sans font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">ADMIN</span>
                 </div>
             </div>
@@ -82,7 +82,7 @@ if ($isPenulisPanel && $role !== 'penulis') { header('Location: ../../auth/login
             <div class="flex items-center gap-2 mr-6 flex-shrink-0">
                 <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white grid place-items-center font-bold font-arabic text-lg">ق</div>
                 <div class="flex items-baseline gap-1.5">
-                    <span class="font-arabic text-xl font-bold text-emerald-800">قَلَمُوْن</span>
+                    <span class="font-arabic text-xl font-bold text-emerald-800">قلمون</span>
                     <span class="text-[9px] font-sans font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">PENULIS</span>
                 </div>
             </div>

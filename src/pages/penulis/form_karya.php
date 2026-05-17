@@ -77,7 +77,7 @@ include __DIR__ . '/../../includes/header.php';
 ?>
 
 <div class="flex">
-    <main class="flex-1 p-6 md:p-8 bg-slate-50 min-h-screen">
+    <main class="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
         <h1 class="text-2xl font-extrabold text-emerald-800 mb-6" data-testid="form-karya-title">
             <?= $editData ? 'Edit Karya' : 'Tulis Karya Baru' ?>
         </h1>
