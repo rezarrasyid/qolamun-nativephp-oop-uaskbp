@@ -36,7 +36,7 @@ include __DIR__ . '/../../includes/header.php';
 
 <div class="flex">
     
-    <main class="flex-1 p-6 md:p-8 bg-slate-50 min-h-screen">
+    <main class="flex-1 max-w-7xl mx-auto w-full p-6 md:p-8">
         <h1 class="text-2xl font-extrabold text-emerald-800 mb-1" data-testid="admin-karya-title">Kelola Karya</h1>
         <p class="text-sm text-slate-500 mb-6">Admin memiliki akses penuh untuk meninjau dan menghapus karya milik siapapun.</p>
         

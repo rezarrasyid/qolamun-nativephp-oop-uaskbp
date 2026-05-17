@@ -26,7 +26,7 @@ include __DIR__ . '/../../includes/header.php';
 ?>
 
 <div class="max-w-7xl mx-auto px-4 py-8">
-
+    <main class="flex-1 max-w-7xl mx-auto w-full p-6 md:p-8">
     <div class="mb-6">
         <h1 class="text-2xl font-extrabold mb-1" style="color:var(--em-dark)" data-testid="admin-dashboard-title">Dashboard Admin</h1>
         <p class="text-sm" style="color:var(--text-muted)"><?= htmlspecialchars($admin->tampilkanInfo()) ?></p>
