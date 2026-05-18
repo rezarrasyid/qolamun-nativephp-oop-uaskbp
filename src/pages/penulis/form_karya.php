@@ -37,22 +37,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Upload thumbnail
     if (!empty($_FILES['thumbnail']['name'])) {
-        $allowed = ['jpg','jpeg','png','gif','webp'];
-        $ext = strtolower(pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION));
         
-        if (!in_array($ext, $allowed)) {
-            $err = 'Format thumbnail harus jpg, jpeg, png, gif, atau webp.';
-        } else {
-            $newName = 'thumb_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
-            $target  = __DIR__ . '/../../uploads/' . $newName;
+        if ($_FILES['thumbnail']['error'] === UPLOAD_ERR_INI_SIZE) {
+            $err = 'Ukuran gambar terlalu besar! Silakan kompres gambar Anda atau pilih file yang lebih kecil.';
+        } 
+        elseif ($_FILES['thumbnail']['error'] !== UPLOAD_ERR_OK) {
+            $err = 'Terjadi kesalahan sistem saat mengunggah gambar (Kode: ' . $_FILES['thumbnail']['error'] . ').';
+        } 
+        else {
+            $allowed = ['jpg','jpeg','png','gif','webp'];
+            $ext = strtolower(pathinfo($_FILES['thumbnail']['name'], PATHINFO_EXTENSION));
             
-            if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $target)) {
-                if ($editData && !empty($editData['thumbnail']) && file_exists(__DIR__.'/../../uploads/'.$editData['thumbnail'])) {
-                    @unlink(__DIR__.'/../../uploads/'.$editData['thumbnail']);
-                }
-                $thumbnailNama = $newName;
+            if (!in_array($ext, $allowed)) {
+                $err = 'Format thumbnail harus jpg, jpeg, png, gif, atau webp.';
             } else {
-                $err = 'Gagal mengunggah thumbnail. Pastikan folder uploads memiliki izin tulis (write permissions).';
+                $newName = 'thumb_' . time() . '_' . bin2hex(random_bytes(4)) . '.' . $ext;
+                $target  = __DIR__ . '/../../uploads/' . $newName;
+                
+                if (move_uploaded_file($_FILES['thumbnail']['tmp_name'], $target)) {
+                    if ($editData && !empty($editData['thumbnail']) && file_exists(__DIR__.'/../../uploads/'.$editData['thumbnail'])) {
+                        @unlink(__DIR__.'/../../uploads/'.$editData['thumbnail']);
+                    }
+                    $thumbnailNama = $newName;
+                } else {
+                    $err = 'Gagal menyimpan file. Pastikan folder uploads memiliki izin tulis.';
+                }
             }
         }
     }

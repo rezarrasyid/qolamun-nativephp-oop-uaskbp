@@ -15,8 +15,7 @@ include __DIR__ . '/../../includes/header.php';
 ?>
 <div class="flex">
     <main class="flex-1 max-w-7xl mx-auto w-full p-6 md:p-8">
-        <h1 class="text-2xl font-extrabold text-emerald-800 mb-1" data-testid="penulis-dashboard-title">Selamat Datang, <?= htmlspecialchars($penulis->getNama()) ?></h1>
-        <p class="text-sm text-slate-500 mb-6"><?= htmlspecialchars($penulis->tampilkanInfo()) ?></p>
+        <h1 class="text-2xl font-extrabold text-emerald-800 mb-6" data-testid="penulis-dashboard-title">Selamat Datang, <?= htmlspecialchars($penulis->getNama()) ?></h1>
 
         <div class="grid sm:grid-cols-2 gap-4">
             <div class="bg-white border border-green-100 rounded-2xl p-5" data-testid="stat-karya-saya">
