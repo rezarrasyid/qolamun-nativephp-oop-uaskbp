@@ -1,10 +1,12 @@
 <?php
 session_start();
-if (($_SESSION['role'] ?? null) !== 'penulis') { header('Location: ../../auth/login.php'); exit; }
+if (($_SESSION['role'] ?? null) !== 'penulis') {
+    header('Location: ../../auth/login.php');
+    exit;
+}
 require_once __DIR__ . '/../../koneksi.php';
 require_once __DIR__ . '/../../classes/Penulis.php';
 
-// [1] Instansiasi object Penulis (child class dari User)
 $penulis = new Penulis($koneksi);
 $penulis->setId($_SESSION['user_id']);
 $penulis->setNama($_SESSION['nama']);

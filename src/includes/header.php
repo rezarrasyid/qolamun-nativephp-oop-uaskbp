@@ -1,17 +1,23 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) { session_start(); }
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 $role = $_SESSION['role'] ?? null;
 $nama = $_SESSION['nama'] ?? 'Santri';
 $cur = basename($_SERVER['PHP_SELF']);
 $uri = $_SERVER['REQUEST_URI'];
 
-// 1. Deteksi otomatis posisi halaman saat ini
 $isAdminPanel   = strpos($uri, '/admin/') !== false;
 $isPenulisPanel = strpos($uri, '/penulis/') !== false;
 
-// 2. Proteksi Keamanan Panel (Tendang jika role tidak sesuai)
-if ($isAdminPanel && $role !== 'admin') { header('Location: ../../auth/login.php'); exit; }
-if ($isPenulisPanel && $role !== 'penulis') { header('Location: ../../auth/login.php'); exit; }
+if ($isAdminPanel && $role !== 'admin') {
+    header('Location: ../../auth/login.php');
+    exit;
+}
+if ($isPenulisPanel && $role !== 'penulis') {
+    header('Location: ../../auth/login.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">

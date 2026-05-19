@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Validasi akses Admin
 if (($_SESSION['role'] ?? null) !== 'admin') { 
     header('Location: ../../auth/login.php'); 
     exit; 
@@ -16,13 +15,10 @@ $aksi  = $_GET['aksi'] ?? null;
 $editId = (int)($_GET['id'] ?? 0);
 $editData = null;
 
-// Ambil data kategori jika sedang dalam mode Edit
 if ($editId) {
     $r = mysqli_query($koneksi, "SELECT * FROM categories WHERE id=$editId LIMIT 1");
     $editData = $r ? mysqli_fetch_assoc($r) : null;
 }
-
-// Proses Form Submit (Tambah / Edit)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama = trim($_POST['nama_kategori']);
     $slug = trim($_POST['slug']) ?: strtolower(preg_replace('/[^a-z0-9]+/', '-', strtolower($nama)));

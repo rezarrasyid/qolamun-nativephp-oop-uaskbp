@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Validasi akses Admin
 if (($_SESSION['role'] ?? null) !== 'admin') { 
     header('Location: ../../auth/login.php'); 
     exit; 
@@ -15,14 +14,12 @@ $msg  = $_GET['msg'] ?? null;
 $aksi = $_GET['aksi'] ?? null;
 $id   = (int)($_GET['id'] ?? 0);
 
-// Proses Hapus Karya
 if ($aksi === 'hapus' && $id > 0) {
     $admin->hapusKaryaApapun($id);
     header('Location: karya.php?msg=' . urlencode('Karya berhasil dihapus.')); 
     exit;
 }
 
-// Ambil data karya beserta kategori dan nama penulis
 $sql = "SELECT p.*, c.nama_kategori, u.nama AS nama_penulis
         FROM posts p
         LEFT JOIN categories c ON c.id = p.category_id

@@ -1,10 +1,9 @@
 <?php
 session_start();
 
-// Validasi akses Admin
-if (($_SESSION['role'] ?? null) !== 'admin') { 
-    header('Location: ../../auth/login.php'); 
-    exit; 
+if (($_SESSION['role'] ?? null) !== 'admin') {
+    header('Location: ../../auth/login.php');
+    exit;
 }
 
 require_once __DIR__ . '/../../koneksi.php';
@@ -13,12 +12,10 @@ require_once __DIR__ . '/../../classes/Admin.php';
 $admin = new Admin($koneksi);
 $msg = $_GET['msg'] ?? null;
 
-// AKSI: tambah, edit, hapus
 $aksi = $_GET['aksi'] ?? null;
 $editId = (int)($_GET['id'] ?? 0);
 $editData = $editId ? $admin->ambilUserById($editId) : null;
 
-// Proses Form Submit (Tambah / Edit)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama     = trim($_POST['nama']);
     $username = trim($_POST['username']);
@@ -37,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Proses Hapus User
 if ($aksi === 'hapus' && $editId > 0) {
     $admin->hapusUser($editId);
     header('Location: users.php?msg=' . urlencode('User berhasil dihapus.')); 

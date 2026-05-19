@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Validasi akses Penulis
 if (($_SESSION['role'] ?? null) !== 'penulis') { 
     header('Location: ../../auth/login.php'); 
     exit; 
@@ -28,7 +27,6 @@ if ($id > 0) {
 
 $err = null;
 
-// Proses Form Submit
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $judul       = trim($_POST['judul']);
     $konten      = $_POST['konten'] ?? '';
@@ -168,13 +166,13 @@ document.addEventListener("DOMContentLoaded", function() {
         selector: '#editorKonten',
         height: 500,
         menubar: false,
-        branding: false, /* Menghilangkan logo tiny di pojok bawah */
+        branding: false, //menghilangkan logo tiny di pojok bawah
         plugins: 'lists link image table code preview fullscreen',
         toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table | preview fullscreen code',
         content_style: "@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap'); body { font-family:'Plus Jakarta Sans', sans-serif; font-size:16px; line-height:1.8; color: #1e293b; }",
         setup: function (editor) {
             editor.on('change', function () {
-                editor.save(); // Memastikan data masuk ke textarea saat form disubmit
+                editor.save(); //memastikan data masuk ke textarea saat form disubmit
             });
         }
     });

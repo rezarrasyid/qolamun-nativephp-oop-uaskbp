@@ -7,7 +7,7 @@ class User
     protected $username;
     protected $password;
     protected $role;
-    protected $koneksi; // mysqli connection object
+    protected $koneksi;
 
     public function __construct($koneksi)
     {

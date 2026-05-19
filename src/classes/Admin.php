@@ -7,13 +7,20 @@ class Admin extends User
 
     public function __construct($koneksi)
     {
-        parent::__construct($koneksi);            // panggil constructor parent (User)
-        $this->hakAkses = 'full';                 // default hak akses admin
-        $this->role     = 'admin';                // override role default
+        parent::__construct($koneksi);
+        $this->hakAkses = 'full';
+        $this->role     = 'admin';
     }
 
-    public function getHakAkses()           { return $this->hakAkses; }
-    public function setHakAkses($hakAkses)  { $this->hakAkses = $hakAkses; }
+    public function getHakAkses()
+    { 
+        return $this->hakAkses; 
+    }
+    
+    public function setHakAkses($hakAkses) 
+    { 
+        $this->hakAkses = $hakAkses; 
+    }
 
     public function tampilkanInfo()
     {

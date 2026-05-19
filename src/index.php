@@ -7,62 +7,45 @@ $result    = $karyaObj->ambilSemuaKarya();
 $total     = $karyaObj->hitungSemua();
 $katResult = $karyaObj->ambilSemuaKategori();
 
-// Kumpulkan semua kategori untuk filter
 $kategoriList = [];
 while ($kat = mysqli_fetch_assoc($katResult)) {
     $kategoriList[] = $kat;
 }
-
-// Hitung jumlah penulis aktif
 $rPenulis = mysqli_query($koneksi, "SELECT COUNT(DISTINCT user_id) AS t FROM posts");
 $totalPenulis = $rPenulis ? (int)mysqli_fetch_assoc($rPenulis)['t'] : 0;
 
-// Hitung jumlah kategori
 $rKat = mysqli_query($koneksi, "SELECT COUNT(*) AS t FROM categories");
 $totalKat = $rKat ? (int)mysqli_fetch_assoc($rKat)['t'] : 0;
 
-// Kumpulkan semua karya ke dalam array
 $semuaKarya = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $semuaKarya[] = $row;
 }
 
-// --- LOGIKA PEMBAGIAN KONTEN YANG DIPERBAIKI ---
-
-// 1. Filter Kategori Super Ketat (Tidak ada campuran)
 $beritaList = [];
 $artikelList = [];
 
 foreach ($semuaKarya as $k) {
     $kn = strtolower($k['nama_kategori'] ?? '');
     
-    // Jika nama kategori mengandung kata 'berita'
     if (strpos($kn, 'berita') !== false) {
         $beritaList[] = $k;
-    } 
-    // Jika nama kategori mengandung kata 'artikel'
-    elseif (strpos($kn, 'artikel') !== false) {
+    } elseif (strpos($kn, 'artikel') !== false) {
         $artikelList[] = $k;
     }
 }
 
-// Batasi jumlah yang tampil
 $beritaList = array_slice($beritaList, 0, 4);
 $artikelList = array_slice($artikelList, 0, 6);
 
-// 2. Logika Headline & Carousel Dinamis
-$carouselItems = array_slice($semuaKarya, 0, 4); // 4 untuk carousel
-$sideHeadlines = array_slice($semuaKarya, 4, 4); // Sisa 4 untuk samping
+$carouselItems = array_slice($semuaKarya, 0, 4);
+$sideHeadlines = array_slice($semuaKarya, 4, 4);
 
-// Jika samping kosong (karena artikel < 5), buat carousel full width!
 $carouselWidthClass = empty($sideHeadlines) ? 'lg:col-span-3' : 'lg:col-span-2';
-
-// 3. Logika Karya Pilihan (Acak agar selalu terlihat penuh/dinamis)
 $pilihanSidebar = $semuaKarya;
-shuffle($pilihanSidebar); // Acak urutannya
-$pilihanSidebar = array_slice($pilihanSidebar, 0, 5); // Ambil maksimal 5
+shuffle($pilihanSidebar);
+$pilihanSidebar = array_slice($pilihanSidebar, 0, 5);
 
-// Fungsi utilitas untuk gambar
 function getThumb($row) {
     if (!empty($row['thumbnail']) && file_exists(__DIR__ . '/uploads/' . $row['thumbnail'])) {
         return 'uploads/' . $row['thumbnail'];
@@ -75,7 +58,6 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <style>
-/* ===== CUSTOM STYLES ===== */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
