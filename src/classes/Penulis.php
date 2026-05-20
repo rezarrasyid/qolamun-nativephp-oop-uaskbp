@@ -7,13 +7,17 @@ class Penulis extends User
 
     public function __construct($koneksi)
     {
-        parent::__construct($koneksi);   // [6] inheritance: panggil parent
+        parent::__construct($koneksi);
         $this->role        = 'penulis';
         $this->jumlahKarya = 0;
     }
 
-    public function getJumlahKarya()  { return $this->jumlahKarya; }
-    public function setJumlahKarya($n){ $this->jumlahKarya = (int)$n; }
+    public function getJumlahKarya()  {
+         return $this->jumlahKarya; 
+    }
+    public function setJumlahKarya($n){ 
+        $this->jumlahKarya = (int)$n; 
+    }
 
     public function tampilkanInfo()
     {
