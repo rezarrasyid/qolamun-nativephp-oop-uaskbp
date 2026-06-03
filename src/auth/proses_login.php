@@ -24,13 +24,13 @@ $userObj = new User($koneksi);
 $data = $userObj->login($username, $password);
 
 if ($data) {
-    $_SESSION['user_id']  = $data['id'];
-    $_SESSION['nama']     = $data['nama'];
-    $_SESSION['username'] = $data['username'];
-    $_SESSION['role']     = $data['role'];
+    $_SESSION['user_id']  = $userObj->getId();
+    $_SESSION['nama']     = $userObj->getNama();
+    $_SESSION['username'] = $userObj->getUsername();
+    $_SESSION['role']     = $userObj->getRole();
 
     // Redirection berdasarkan Role
-    if ($data['role'] === 'admin') {
+    if ($userObj->getRole() === 'admin') {
         header('Location: ../pages/admin/dashboard.php');
     } else {
         header('Location: ../pages/penulis/dashboard.php');

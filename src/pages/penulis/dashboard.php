@@ -17,12 +17,15 @@ include __DIR__ . '/../../includes/header.php';
 ?>
 <div class="flex">
     <main class="flex-1 max-w-7xl mx-auto w-full p-6 md:p-8">
-        <h1 class="text-2xl font-extrabold text-emerald-800 mb-6" data-testid="penulis-dashboard-title">Selamat Datang, <?= htmlspecialchars($penulis->getNama()) ?></h1>
+        <div class="mb-6">
+            <h1 class="text-2xl font-extrabold text-emerald-800 mb-1" data-testid="penulis-dashboard-title">Selamat Datang, <?= htmlspecialchars($penulis->getNama()) ?></h1>
+            <p class="text-sm text-emerald-600/70 font-medium" data-testid="penulis-info"><?= htmlspecialchars($penulis->tampilkanInfo()) ?></p>
+        </div>
 
         <div class="grid sm:grid-cols-2 gap-4">
             <div class="bg-white border border-green-100 rounded-2xl p-5" data-testid="stat-karya-saya">
                 <p class="text-xs uppercase tracking-wider text-emerald-600">Karya Saya</p>
-                <p class="text-4xl font-extrabold text-emerald-800 mt-2"><?= $total ?></p>
+                <p class="text-4xl font-extrabold text-emerald-800 mt-2"><?= $penulis->getJumlahKarya() ?></p>
             </div>
             <a href="form_karya.php" class="bg-emerald-600 text-white rounded-2xl p-5 hover:bg-emerald-700 flex items-center justify-between" data-testid="cta-tambah-karya">
                 <span class="font-semibold">+ Tulis Karya Baru</span>

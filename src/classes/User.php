@@ -75,11 +75,11 @@ class User
         if ($result && mysqli_num_rows($result) === 1) {
             $data = mysqli_fetch_assoc($result);
             
-            $this->id       = $data['id'];
-            $this->nama     = $data['nama'];
-            $this->username = $data['username'];
+            $this->setId($data['id']);
+            $this->setNama($data['nama']);
+            $this->setUsername($data['username']);
             $this->password = $data['password'];
-            $this->role     = $data['role'];
+            $this->setRole($data['role']);
             
             return $data;
         }
@@ -88,13 +88,18 @@ class User
 
     public function register($nama, $username, $password, $role = 'penulis')
     {
-        $nama     = mysqli_real_escape_string($this->koneksi, $nama);
-        $username = mysqli_real_escape_string($this->koneksi, $username);
-        $password = md5($password);
-        $role     = mysqli_real_escape_string($this->koneksi, $role);
+        $this->setNama($nama);
+        $this->setUsername($username);
+        $this->setPassword($password);
+        $this->setRole($role);
+
+        $escapedNama     = mysqli_real_escape_string($this->koneksi, $this->getNama());
+        $escapedUsername = mysqli_real_escape_string($this->koneksi, $this->getUsername());
+        $hashedPassword  = $this->getPassword();
+        $escapedRole     = mysqli_real_escape_string($this->koneksi, $this->getRole());
 
         $sql = "INSERT INTO users (nama, username, password, role)
-                VALUES ('$nama', '$username', '$password', '$role')";
+                VALUES ('$escapedNama', '$escapedUsername', '$hashedPassword', '$escapedRole')";
         
         return mysqli_query($this->koneksi, $sql);
     }

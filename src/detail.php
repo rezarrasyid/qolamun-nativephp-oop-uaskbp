@@ -2,9 +2,15 @@
 require_once __DIR__ . '/koneksi.php';
 require_once __DIR__ . '/classes/Karya.php';
 
+$id = (int)($_GET['id'] ?? 0);
 $slug = $_GET['slug'] ?? '';
 $karyaObj = new Karya($koneksi);
-$karya = $karyaObj->ambilKaryaBySlug($slug);
+
+if ($id > 0) {
+    $karya = $karyaObj->ambilKaryaById($id);
+} else {
+    $karya = $karyaObj->ambilKaryaBySlug($slug);
+}
 
 if (!$karya) {
     http_response_code(404);

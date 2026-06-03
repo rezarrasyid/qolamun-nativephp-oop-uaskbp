@@ -30,6 +30,7 @@ include __DIR__ . '/../../includes/header.php';
         
         <div class="mb-8">
             <h1 class="text-2xl font-extrabold text-emerald-900 mb-1" data-testid="admin-dashboard-title">Dashboard Admin</h1>
+            <p class="text-sm text-emerald-700/70 font-medium" data-testid="admin-info"><?= htmlspecialchars($admin->tampilkanInfo()) ?></p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
